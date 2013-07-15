@@ -42,7 +42,10 @@ var getActorCredits = function() {
 
                     for (var i = 0, n = personCredits.cast.length; i < n; i++) {
                         cast = personCredits.cast[i];
-                        personHTML += '<div><h3>' + cast.title + '</h3>';
+                        personHTML += '<div class="span12 credit_container"><div class="span3"><img src="http://d3gtl9l2a4fn1j.cloudfront.net/t/p/w500/' + cast.poster_path + ' class="img-rounded"></div>';
+                        personHTML += '<div class="span9 credit"><h2>' + cast.title + '</h2>';
+                        personHTML += '<span class="muted">' + cast.character + '</span>';
+                        personHTML += '<img class="icon-calendar"><span>' + cast.release_date + '</span></div></div>'
                     }
 
                     $('#credits-list').append(personHTML);
