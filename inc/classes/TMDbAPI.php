@@ -37,6 +37,13 @@ class TMDbAPI {
     /**
      *
      */
+    public function getPersonGeneralInfo($personId) {
+        return $this->_apiRequest('person/' . $personId);
+    }
+
+    /**
+     *
+     */
     public function searchPersonCredits($personId) {
         return $this->_apiRequest('person/' . $personId . '/credits');
     }
@@ -68,7 +75,7 @@ class TMDbAPI {
 
         curl_close($ch);
 
-        return json_decode($apiResponseJSON);
+        return $apiResponseJSON;
     }
 }
 ?>
