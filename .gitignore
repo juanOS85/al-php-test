@@ -4,4 +4,5 @@ al-php-test.sublime-workspace
 
 composer.phar
 
-vendor/
+# Ignore root vendor folders (PHP third-party libraries)
+/vendor

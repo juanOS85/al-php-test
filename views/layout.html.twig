@@ -1,9 +1,19 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
         <title>Alert Logic PHP Test</title>
+
+        <!-- Normalize -->
+        <link rel="stylesheet" media="screen" href="/assets/css/vendor/normalize.css">
+        <!-- Twitter Bootstrap -->
+        <link rel="stylesheet" media="screen" href="/assets/css/vendor/bootstrap.min.css">
+        <link rel="stylesheet" media="screen" href="/assets/css/vendor/bootstrap-responsive.min.css">
     </head>
     <body>
+        <div class="container-fluid">{% block content %}{% endblock %}</div>
+
         <!-- jQuery -->
         <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
     </body>
