@@ -11,9 +11,12 @@
     },
     "extra": {
         "heroku": {
-            "framework": "silex",
             "document-root": "web",
-            "index": "web/index.php"
+            "index-document": "index.php",
+            "engines": {
+                "php": "5.5.1",
+                "nginx": "1.5.2"
+            }
         }
     }
 }
