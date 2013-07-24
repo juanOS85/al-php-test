@@ -2,7 +2,7 @@
     <div class="hero-unit">
         <h1>The Movie Database</h1>
         <div class="search-form">
-            <form action="search" method="get" accept-charset="utf-8">
+            <form action="/results" method="get" accept-charset="utf-8">
                 {{ form_start(form) }}
                     {{ form_widget(form.keyword) }}
                     {{ form_widget(form.criteria) }}

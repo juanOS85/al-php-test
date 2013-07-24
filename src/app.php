@@ -4,7 +4,9 @@ require_once __DIR__ . '/../vendor/autoload.php';
 $app = new Silex\Application();
 $app['debug'] = true;
 
-// Registered serives
+/**
+ * Registered services
+ */
 $app->register(new Silex\Provider\TwigServiceProvider(), array(
     'twig.path' => __DIR__ . '/../views',
     'twig.options' => array('cache' => __DIR__ . '/../cache')
@@ -12,7 +14,9 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
 $app->register(new Silex\Provider\FormServiceProvider());
 $app->register(new Silex\Provider\TranslationServiceProvider());
 
-// definitions
+/**
+ * Routing
+ */
 $app->get('/', function () use ($app) {
     $form = $app['form.factory']->createBuilder('form')
         ->add('keyword', null, array(
@@ -30,6 +34,10 @@ $app->get('/', function () use ($app) {
         ->getForm();
 
     return $app['twig']->render('index.html.twig', array('form' => $form->createView()));
+});
+
+$app->get('/results', function() use ($app) {
+    return $app['twig']->render('results.html.twig');
 });
 
 return $app;
