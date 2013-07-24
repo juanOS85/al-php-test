@@ -3,6 +3,8 @@
         "silex/silex": "1.*",
         "twig/twig": "1.*",
         "symfony/twig-bridge": "2.*",
+        "symfony/translation": "2.*",
+        "symfony/form": "2.*",
         "guzzle/guzzle": "3.*"
     }
 }
