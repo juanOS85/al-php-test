@@ -1,6 +1,7 @@
 {
+    "name": "al-php-test",
     "require": {
-        "php": "~5.3",
+        "php": ">=5.3.2",
         "silex/silex": "1.*",
         "twig/twig": "1.*",
         "symfony/twig-bridge": "2.*",
@@ -11,7 +12,7 @@
     "extra": {
         "heroku": {
             "document-root": "web",
-            "index": "web/index.php"
+            "index-document": "index.php"
         }
     }
 }
