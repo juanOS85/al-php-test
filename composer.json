@@ -11,7 +11,8 @@
     },
     "autoload": {
         "psr-0": {
-            "TMDb": "src/"
+            "TMDb\\API": "src/",
+            "TMDb\\Controller": "src/"
         }
     },
     "extra": {
