@@ -42,6 +42,12 @@ class TMDbController {
     public function resultsAction(Request $request, Application $app) {
         $this->tmdbApi = new TMDbAPI('6425ff98fc0c954273045edc360b9e77');
 
+        if ('actor' === $request->get('criteria')) {
+            $result = $this->searchActor($app, $request->get('keyword'));
+        } else {
+            $result = $this->searchMovie($request->get('keyword'));
+        }
+
         $data = array(
             'keyword'  => $request->get('keyword'),
             'criteria' => $request->get('criteria')
@@ -65,24 +71,38 @@ class TMDbController {
             ))
             ->getForm();
 
-        // if ($form->isValid()) {
-            // $data = $form->getData();
+        // return $app['twig']->render('results.html.twig', array('form' => $form->createView()));
 
-            // $params = array(
-            //     'query' => $request->get('keyword'),
-            //     'page' => 1,
-            //     'include_adult' => 1,
-            //     'api_key' => '6425ff98fc0c954273045edc360b9e77'
-            // );
+        return $app['twig']->render('results.html.twig');
+    }
 
-            // $client = new Client('http://api.themoviedb.org/3');
-            // $person = $client->get('search/person?' . http_build_query($params), array(
-            //     'Accept' => 'application/json'
-            // ))->send();
-        // }
+    /**
+     *
+     */
+    public function actorAction(Request $request, Application $app) {
+        return $app['twig']->render('results.html.twig');
+    }
 
-        $this->tmdbApi->searchPerson($request->get('keyword'));
+    /**
+     *
+     */
+    private function searchActor(Application $app, $c) {
+        $a = json_decode($this->tmdbApi->searchPerson($c));
+        $numResults = count($a->results);
 
-        return $app['twig']->render('results.html.twig', array('form' => $form->createView()));
+        if ($numResults > 0) {
+            if ($numResults > 1) {
+
+            } else {
+            }
+        } else {
+
+        }
+    }
+
+    /**
+     *
+     */
+    private function searchMovie() {
     }
 }

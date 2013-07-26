@@ -27,7 +27,8 @@ $app->register(new TranslationServiceProvider());
 /**
  * Routing definitions
  */
-$app->get('/',        'TMDb\Controller\TMDbController::indexAction');
-$app->get('/results', 'TMDb\Controller\TMDbController::resultsAction');
+$app->get('/',           'TMDb\Controller\TMDbController::indexAction');
+$app->get('/results',    'TMDb\Controller\TMDbController::resultsAction');
+$app->get('/actor/{id}', 'TMDb\Controller\TMDbController::actorAction');
 
 return $app;

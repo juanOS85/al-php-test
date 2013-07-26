@@ -38,14 +38,13 @@ class TMDbAPI {
             'include_adult' => (bool) $adult,
         );
 
-        $person = $this->restClient->get('search/person?' . http_build_query($params) . '&' . http_build_query($this->apiKey), $this->headers)->send();
-
-        echo $person->getBody();
+        return $this->apiRequest('search/person', $params);
     }
 
     /**
      *
      */
-    private function _apiRequest($uri, $parmas) {
+    private function apiRequest($uri, $params) {
+        return $this->restClient->get($uri . '?' . http_build_query($params) . '&' . http_build_query($this->apiKey), $this->headers)->send()->getBody();
     }
 }
