@@ -9,6 +9,9 @@ use TMDb\API\TMDbAPI;
  * @author juanchopx2
  */
 class TMDbController {
+    /**
+     *
+     */
     protected $tmdbApi;
 
     /**
@@ -39,19 +42,29 @@ class TMDbController {
     /**
      *
      */
-    public function resultsAction(Request $request, Application $app) {
+    public function searchAction(Request $request, Application $app) {
         $this->tmdbApi = new TMDbAPI('6425ff98fc0c954273045edc360b9e77');
-
-        if ('actor' === $request->get('criteria')) {
-            $result = $this->searchActor($app, $request->get('keyword'));
-        } else {
-            $result = $this->searchMovie($request->get('keyword'));
-        }
 
         $data = array(
             'keyword'  => $request->get('keyword'),
             'criteria' => $request->get('criteria')
         );
+
+        if ('actor' === $request->get('criteria')) {
+            $a = json_decode($this->tmdbApi->searchPerson($request->get('keyword')));
+            $numResults = count($a->results);
+
+            if (0 < $numResults) {
+                if (1 === $numResults) {
+                    return $app->redirect('/actor/' . $a->results[0]->id);
+                } else {
+                }
+            } else {
+
+            }
+        } else {
+            $result = $this->searchMovie($request->get('keyword'));
+        }
 
         $form = $app['form.factory']->createNamedBuilder(null, 'form', $data)
             ->add('keyword', null, array(
@@ -79,30 +92,18 @@ class TMDbController {
     /**
      *
      */
-    public function actorAction(Request $request, Application $app) {
-        return $app['twig']->render('results.html.twig');
+    public function resultsAction(Request $request, Application $app) {
     }
 
     /**
      *
      */
-    private function searchActor(Application $app, $c) {
-        $a = json_decode($this->tmdbApi->searchPerson($c));
-        $numResults = count($a->results);
+    public function actorAction($id, Request $request, Application $app) {
+        $this->tmdbApi = new TMDbAPI('6425ff98fc0c954273045edc360b9e77');
+        $actorInfo = json_decode($this->tmdbApi->getPersonGeneralInfo($id));
 
-        if ($numResults > 0) {
-            if ($numResults > 1) {
+        print_r($actorInfo);
 
-            } else {
-            }
-        } else {
-
-        }
-    }
-
-    /**
-     *
-     */
-    private function searchMovie() {
+        return $app['twig']->render('actor/actor.html.twig', array('actor' => $actorInfo));
     }
 }
