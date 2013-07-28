@@ -58,6 +58,13 @@ class TMDbAPI {
     /**
      *
      */
+    public function getMovieBasicInfo($movieId) {
+        return $this->apiRequest('movie/' . $movieId);
+    }
+
+    /**
+     *
+     */
     private function apiRequest($uri, $params = array()) {
         return $this->restClient->get($uri . '?' . http_build_query($params) . '&' . http_build_query($this->apiKey), $this->headers)->send()->getBody();
     }

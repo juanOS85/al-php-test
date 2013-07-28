@@ -1,0 +1,35 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+
+{% include 'form.html.twig' %}
+
+<div class="row-fluid">
+    <div class="span12 rounded-corners movie-info">
+        <div class="span3">
+            <img src="http://d3gtl9l2a4fn1j.cloudfront.net/t/p/w342/{{ movie.poster_path }}" class="img-rounded">
+        </div>
+
+        <div class="span9">
+            <div class="page-header">
+                <h1>
+                    {{ movie.original_title }}
+                    <small>{{ movie.release_date }}</small>
+                </h1>
+
+                <div class="row-fluid">
+                    <small class="span12 tagline">{{ movie.tagline }}</small>
+                </div>
+
+                {% for genre in movie.genres %}
+                    <span class="label">{{ attribute(genre, 'name') }}</span>
+                {% endfor %}
+            </div>
+
+            <p>{{ movie.overview }}</p>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

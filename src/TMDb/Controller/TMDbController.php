@@ -132,4 +132,40 @@ class TMDbController {
             'credits' => $actorCredits
         ));
     }
+
+    /**
+     *
+     */
+    public function movieAction($id, Request $request, Application $app) {
+        $form = $app['form.factory']->createNamedBuilder(null, 'form', null)
+        ->add('keyword', null, array(
+            'label' => false,
+            'attr'  => array(
+                'class'       => 'span8',
+                'placeholder' => 'Search keyword'
+            )
+        ))
+        ->add('criteria', 'choice', array(
+            'choices' => array(
+                'actor' => 'Actor',
+                'movie' => 'Movie'
+            ),
+            'label' => false,
+            'attr'  => array('class' => 'span2')
+        ))
+        ->getForm();
+
+        $this->tmdbApi = new TMDbAPI('6425ff98fc0c954273045edc360b9e77');
+        $movieInfo = json_decode($this->tmdbApi->getMovieBasicInfo($id));
+        $movieInfo->release_date = date('F j, Y', strtotime($movieInfo->release_date));
+
+        // echo '<pre>';
+        // print_r($movieInfo);
+        // echo '</pre>';
+
+        return $app['twig']->render('movie.html.twig', array(
+            'form'  => $form->createView(),
+            'movie' => $movieInfo
+        ));
+    }
 }

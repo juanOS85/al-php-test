@@ -31,5 +31,6 @@ $app->get('/',           'TMDb\Controller\TMDbController::indexAction');
 $app->get('/search',     'TMDb\Controller\TMDbController::searchAction');
 $app->get('/results',    'TMDb\Controller\TMDbController::resultsAction');
 $app->get('/actor/{id}', 'TMDb\Controller\TMDbController::actorAction');
+$app->get('/movie/{id}', 'TMDb\Controller\TMDbController::movieAction');
 
 return $app;
