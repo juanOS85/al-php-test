@@ -7,7 +7,7 @@ use Guzzle\Http\Client;
  * @author juanchopx2
  */
 class TMDbAPI {
-    const API_SCHEME = 'http://';
+    const API_SCHEME = 'https://';
     const API_URL = 'api.themoviedb.org';
     const API_VERSION = '3';
 
@@ -46,6 +46,13 @@ class TMDbAPI {
      */
     public function getPersonGeneralInfo($personId) {
         return $this->apiRequest('person/' . $personId);
+    }
+
+    /**
+     *
+     */
+    public function searchPersonCredits($personId) {
+        return $this->apiRequest('person/' . $personId . '/credits');
     }
 
     /**

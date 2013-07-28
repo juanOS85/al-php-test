@@ -58,6 +58,7 @@ class TMDbController {
                 if (1 === $numResults) {
                     return $app->redirect('/actor/' . $a->results[0]->id);
                 } else {
+
                 }
             } else {
 
@@ -99,11 +100,36 @@ class TMDbController {
      *
      */
     public function actorAction($id, Request $request, Application $app) {
+        $form = $app['form.factory']->createNamedBuilder(null, 'form', null)
+        ->add('keyword', null, array(
+            'label' => false,
+            'attr'  => array(
+                'class'       => 'span8',
+                'placeholder' => 'Search keyword'
+            )
+        ))
+        ->add('criteria', 'choice', array(
+            'choices' => array(
+                'actor' => 'Actor',
+                'movie' => 'Movie'
+            ),
+            'label' => false,
+            'attr'  => array('class' => 'span2')
+        ))
+        ->getForm();
+
         $this->tmdbApi = new TMDbAPI('6425ff98fc0c954273045edc360b9e77');
         $actorInfo = json_decode($this->tmdbApi->getPersonGeneralInfo($id));
+        $actorCredits = json_decode($this->tmdbApi->searchPersonCredits($id));
 
-        print_r($actorInfo);
+        // echo '<pre>';
+        // print_r($actorCredits);
+        // echo '</pre>';
 
-        return $app['twig']->render('actor/actor.html.twig', array('actor' => $actorInfo));
+        return $app['twig']->render('actor.html.twig', array(
+            'form'    => $form->createView(),
+            'actor'   => $actorInfo,
+            'credits' => $actorCredits
+        ));
     }
 }

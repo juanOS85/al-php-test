@@ -6,3 +6,6 @@ composer.phar
 
 # Ignore root vendor folders (PHP third-party libraries)
 /vendor
+
+# OS X hidden folder
+.DS_Store
