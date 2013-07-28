@@ -7,18 +7,18 @@
 {% set row = 0 %}
 
 <div class="row-fluid">
-    <div class="span3">
+    <div class="span3 rounded-corners person-info">
         <img src="http://d3gtl9l2a4fn1j.cloudfront.net/t/p/w185/{{ actor.profile_path }}" class="img-rounded">
         <h2>{{ actor.name }}</h2>
     </div>
 
-    <div class="span9">
+    <div class="span9 person-credits rounded-corners">
         {% for movie in credits.cast %}
             {% if row == 0 %}
                 <div class="row-fluid">
             {% endif %}
 
-            <div class="span4">
+            <div class="span4 credits-info">
                 <img src="http://d3gtl9l2a4fn1j.cloudfront.net/t/p/w185/{{ movie.poster_path }}" class="img-rounded">
                 <h3>
                     <a href="/movie/{{ movie.id }}">{{ movie.title }}</a>
