@@ -44,6 +44,7 @@ class TMDbController {
      */
     public function searchAction(Request $request, Application $app) {
         $this->tmdbApi = new TMDbAPI('6425ff98fc0c954273045edc360b9e77');
+        $r = array();
 
         $data = array(
             'keyword'  => $request->get('keyword'),
@@ -58,13 +59,33 @@ class TMDbController {
                 if (1 === $numResults) {
                     return $app->redirect('/actor/' . $a->results[0]->id);
                 } else {
+                    $r['path'] = 'actor';
+                    // var_dump($a);
 
+                    for ($i = 0; $i < $numResults; $i++) {
+                        $r['data'][$i]['id']    = $a->results[$i]->id;
+                        $r['data'][$i]['title'] = $a->results[$i]->name;
+                        $r['data'][$i]['img']   = $a->results[$i]->profile_path;
+                    }
                 }
-            } else {
-
             }
         } else {
-            $result = $this->searchMovie($request->get('keyword'));
+            $m = json_decode($this->tmdbApi->searchMovie($request->get('keyword')));
+            $numResults = count($m->results);
+
+            if (0 < $numResults) {
+                if (1 === $numResults) {
+                    return $app->redirect('/movie/' . $m->results[0]->id);
+                } else {
+                    $r['path'] = 'movie';
+
+                    for ($i = 0; $i < $numResults; $i++) {
+                        $r['data'][$i]['id'] = $m->results[$i]->id;
+                        $r['data'][$i]['title'] = $m->results[$i]->title;
+                        $r['data'][$i]['img']   = $m->results[$i]->poster_path;
+                    }
+                }
+            }
         }
 
         $form = $app['form.factory']->createNamedBuilder(null, 'form', $data)
@@ -85,9 +106,10 @@ class TMDbController {
             ))
             ->getForm();
 
-        // return $app['twig']->render('results.html.twig', array('form' => $form->createView()));
-
-        return $app['twig']->render('results.html.twig');
+        return $app['twig']->render('results.html.twig', array(
+            'form'    => $form->createView(),
+            'results' => $r
+        ));
     }
 
     /**

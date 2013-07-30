@@ -58,6 +58,19 @@ class TMDbAPI {
     /**
      *
      */
+    public function searchMovie($query, $page = 1, $adult = FALSE) {
+        $params = array(
+            'query' => $query,
+            'page' => (int) $page,
+            'include_adult' => (bool) $adult,
+        );
+
+        return $this->apiRequest('search/movie', $params);
+    }
+
+    /**
+     *
+     */
     public function getMovieBasicInfo($movieId) {
         return $this->apiRequest('movie/' . $movieId);
     }

@@ -1,1 +1,34 @@
 {% extends 'layout.html.twig' %}
+
+{% block content %}
+
+{% include 'form.html.twig' %}
+
+{% set row = 0 %}
+
+<div class="row-fluid">
+    <div class="span12 rounded-corners results-info">
+        {% for item in results.data %}
+             {% if row == 0 %}
+                <div class="row-fluid">
+            {% endif %}
+
+            <div class="span3">
+                <img src="http://d3gtl9l2a4fn1j.cloudfront.net/t/p/w185/{{ item.img }}" class="img-rounded">
+                <h3>
+                    <a href="/{{ results.path }}/{{ item.id }}">{{ item.title }}</a>
+                </h3>
+            </div>
+
+            {% set row = row + 1 %}
+
+            {% if row == 4 %}
+                </div>
+
+                {% set row = 0 %}
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}
