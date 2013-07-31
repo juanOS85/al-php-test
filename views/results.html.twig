@@ -14,7 +14,12 @@
             {% endif %}
 
             <div class="span3">
-                <img src="http://d3gtl9l2a4fn1j.cloudfront.net/t/p/w185/{{ item.img }}" class="img-rounded">
+                {% if item.img == '' %}
+                    <img src="http://placehold.it/185x278&amp;text=No+Image+Available" class="img-rounded">
+                {% else %}
+                    <img src="http://d3gtl9l2a4fn1j.cloudfront.net/t/p/w185/{{ item.img }}" class="img-rounded">
+                {% endif %}
+
                 <h3>
                     <a href="/{{ results.path }}/{{ item.id }}">{{ item.title }}</a>
                 </h3>

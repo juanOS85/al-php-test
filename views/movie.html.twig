@@ -7,7 +7,11 @@
 <div class="row-fluid">
     <div class="span12 rounded-corners movie-info">
         <div class="span3">
-            <img src="http://d3gtl9l2a4fn1j.cloudfront.net/t/p/w342/{{ movie.poster_path }}" class="img-rounded">
+            {% if movie.poster_path == '' %}
+                <img src="http://placehold.it/232x348&amp;text=No+Image+Available" class="img-rounded">
+            {% else %}
+                <img src="http://d3gtl9l2a4fn1j.cloudfront.net/t/p/w342/{{ movie.poster_path }}" class="img-rounded">
+            {% endif %}
         </div>
 
         <div class="span9">
@@ -17,9 +21,11 @@
                     <small>{{ movie.release_date }}</small>
                 </h1>
 
-                <div class="row-fluid">
-                    <small class="span12 tagline">{{ movie.tagline }}</small>
-                </div>
+                {% if movie.tagline != '' %}
+                    <div class="row-fluid">
+                        <small class="span12 tagline">{{ movie.tagline }}</small>
+                    </div>
+                {% endif %}
 
                 {% for genre in movie.genres %}
                     <span class="label">{{ attribute(genre, 'name') }}</span>
