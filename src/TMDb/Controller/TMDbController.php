@@ -45,6 +45,7 @@ class TMDbController {
     public function searchAction(Request $request, Application $app) {
         $this->tmdbApi = new TMDbAPI('6425ff98fc0c954273045edc360b9e77');
         $r = array();
+        $r['data'] = array();
 
         $data = array(
             'keyword'  => $request->get('keyword'),

@@ -8,31 +8,37 @@
 
 <div class="row-fluid">
     <div class="span12 rounded-corners results-info">
-        {% for item in results.data %}
-             {% if row == 0 %}
-                <div class="row-fluid">
-            {% endif %}
-
-            <div class="span3">
-                {% if item.img == '' %}
-                    <img src="http://placehold.it/185x278&amp;text=No+Image+Available" class="img-rounded">
-                {% else %}
-                    <img src="http://d3gtl9l2a4fn1j.cloudfront.net/t/p/w185/{{ item.img }}" class="img-rounded">
+        {% if results.data|length > 0 %}
+            {% for item in results.data %}
+                 {% if row == 0 %}
+                    <div class="row-fluid">
                 {% endif %}
 
-                <h3>
-                    <a href="/{{ results.path }}/{{ item.id }}">{{ item.title }}</a>
-                </h3>
-            </div>
+                <div class="span3">
+                    {% if item.img == '' %}
+                        <img src="http://placehold.it/185x278&amp;text=No+Image+Available" class="img-rounded">
+                    {% else %}
+                        <img src="http://d3gtl9l2a4fn1j.cloudfront.net/t/p/w185/{{ item.img }}" class="img-rounded">
+                    {% endif %}
 
-            {% set row = row + 1 %}
-
-            {% if row == 4 %}
+                    <h3>
+                        <a href="/{{ results.path }}/{{ item.id }}">{{ item.title }}</a>
+                    </h3>
                 </div>
 
-                {% set row = 0 %}
-            {% endif %}
-        {% endfor %}
+                {% set row = row + 1 %}
+
+                {% if row == 4 %}
+                    </div>
+
+                    {% set row = 0 %}
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            <div class="alert alert-block">
+                <h4>No results found :(</h4>
+            </div>
+        {% endif %}
     </div>
 </div>
 
