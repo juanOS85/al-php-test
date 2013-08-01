@@ -43,7 +43,7 @@ class TMDbController {
      *
      */
     public function searchAction(Request $request, Application $app) {
-        $this->tmdbApi = new TMDbAPI('6425ff98fc0c954273045edc360b9e77');
+        $this->tmdbApi = TMDbAPI::getInstance();
         $r = array();
         $r['data'] = array();
 
@@ -134,7 +134,7 @@ class TMDbController {
         ))
         ->getForm();
 
-        $this->tmdbApi = new TMDbAPI('6425ff98fc0c954273045edc360b9e77');
+        $this->tmdbApi = TMDbAPI::getInstance();
         $actorInfo = json_decode($this->tmdbApi->getPersonGeneralInfo($id));
         $actorCredits = json_decode($this->tmdbApi->searchPersonCredits($id));
 
@@ -167,7 +167,7 @@ class TMDbController {
         ))
         ->getForm();
 
-        $this->tmdbApi = new TMDbAPI('6425ff98fc0c954273045edc360b9e77');
+        $this->tmdbApi = TMDbAPI::getInstance();
         $movieInfo = json_decode($this->tmdbApi->getMovieBasicInfo($id));
         $movieInfo->release_date = date('F j, Y', strtotime($movieInfo->release_date));
 

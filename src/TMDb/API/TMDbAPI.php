@@ -7,25 +7,39 @@ use Guzzle\Http\Client;
  * @author juanchopx2
  */
 class TMDbAPI {
-    const API_SCHEME = 'https://';
-    const API_URL = 'api.themoviedb.org';
+    const API_SCHEME  = 'https://';
+    const API_URL     = 'api.themoviedb.org';
     const API_VERSION = '3';
+    const API_KEY     = '6425ff98fc0c954273045edc360b9e77';
 
     protected $apiKey;
     protected $restClient;
     protected $headers;
 
+    private static $instance;
+
     /**
      *
      */
-    function __construct($apiKey) {
-        $this->apiKey = array('api_key' => $apiKey);
+    private function __construct() {
+        $this->apiKey = array('api_key' => TMDbAPI::API_KEY);
 
         $this->restClient = new Client(TMDbAPI::API_SCHEME . TMDbAPI::API_URL . '/' . TMDbAPI::API_VERSION);
 
         $this->headers = array(
             'Accept' => 'application/json'
         );
+    }
+
+    /**
+     *
+     */
+    public static function getInstance() {
+        if (self::$instance === null) {
+            self::$instance = new TMDbAPI();
+        }
+
+        return self::$instance;
     }
 
     /**

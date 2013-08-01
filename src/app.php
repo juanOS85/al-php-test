@@ -12,17 +12,21 @@ use Silex\Provider\TranslationServiceProvider;
 use Silex\Provider\TwigServiceProvider;
 
 $app = new Application();
+// Set true for development
 $app['debug'] = true;
 
 /**
  * Registered services
  */
 $app->register(new ServiceControllerServiceProvider());
+// Handle user sessions
 $app->register(new SessionServiceProvider());
+// Handle Twig template engine
 $app->register(new TwigServiceProvider(), array(
-    'twig.path' => __DIR__ . '/../views',
+    'twig.path'    => __DIR__ . '/../views',
     'twig.options' => array('cache' => __DIR__ . '/../cache')
 ));
+// Handle Forms
 $app->register(new FormServiceProvider());
 $app->register(new TranslationServiceProvider());
 
