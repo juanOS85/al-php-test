@@ -7,6 +7,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 use Silex\Application;
 use Silex\Provider\FormServiceProvider;
 use Silex\Provider\ServiceControllerServiceProvider;
+use Silex\Provider\SessionServiceProvider;
 use Silex\Provider\TranslationServiceProvider;
 use Silex\Provider\TwigServiceProvider;
 
@@ -17,6 +18,7 @@ $app['debug'] = true;
  * Registered services
  */
 $app->register(new ServiceControllerServiceProvider());
+$app->register(new SessionServiceProvider());
 $app->register(new TwigServiceProvider(), array(
     'twig.path' => __DIR__ . '/../views',
     'twig.options' => array('cache' => __DIR__ . '/../cache')

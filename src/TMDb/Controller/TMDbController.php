@@ -47,10 +47,10 @@ class TMDbController {
         $r = array();
         $r['data'] = array();
 
-        $data = array(
-            'keyword'  => $request->get('keyword'),
+        $app['session']->set('data', array(
+            'keyword' => $request->get('keyword'),
             'criteria' => $request->get('criteria')
-        );
+        ));
 
         if ('actor' === $request->get('criteria')) {
             $a = json_decode($this->tmdbApi->searchPerson($request->get('keyword')));
@@ -61,7 +61,6 @@ class TMDbController {
                     return $app->redirect('/actor/' . $a->results[0]->id);
                 } else {
                     $r['path'] = 'actor';
-                    // var_dump($a);
 
                     for ($i = 0; $i < $numResults; $i++) {
                         $r['data'][$i]['id']    = $a->results[$i]->id;
@@ -89,7 +88,7 @@ class TMDbController {
             }
         }
 
-        $form = $app['form.factory']->createNamedBuilder(null, 'form', $data)
+        $form = $app['form.factory']->createNamedBuilder(null, 'form', $app['session']->get('data'))
             ->add('keyword', null, array(
                 'label' => false,
                 'attr'  => array(
@@ -116,14 +115,8 @@ class TMDbController {
     /**
      *
      */
-    public function resultsAction(Request $request, Application $app) {
-    }
-
-    /**
-     *
-     */
     public function actorAction($id, Request $request, Application $app) {
-        $form = $app['form.factory']->createNamedBuilder(null, 'form', null)
+        $form = $app['form.factory']->createNamedBuilder(null, 'form', $app['session']->get('data'))
         ->add('keyword', null, array(
             'label' => false,
             'attr'  => array(
@@ -145,10 +138,6 @@ class TMDbController {
         $actorInfo = json_decode($this->tmdbApi->getPersonGeneralInfo($id));
         $actorCredits = json_decode($this->tmdbApi->searchPersonCredits($id));
 
-        // echo '<pre>';
-        // print_r($actorCredits);
-        // echo '</pre>';
-
         return $app['twig']->render('actor.html.twig', array(
             'form'    => $form->createView(),
             'actor'   => $actorInfo,
@@ -160,7 +149,7 @@ class TMDbController {
      *
      */
     public function movieAction($id, Request $request, Application $app) {
-        $form = $app['form.factory']->createNamedBuilder(null, 'form', null)
+        $form = $app['form.factory']->createNamedBuilder(null, 'form', $app['session']->get('data'))
         ->add('keyword', null, array(
             'label' => false,
             'attr'  => array(
@@ -182,9 +171,6 @@ class TMDbController {
         $movieInfo = json_decode($this->tmdbApi->getMovieBasicInfo($id));
         $movieInfo->release_date = date('F j, Y', strtotime($movieInfo->release_date));
 
-        // echo '<pre>';
-        // print_r($movieInfo);
-        // echo '</pre>';
 
         return $app['twig']->render('movie.html.twig', array(
             'form'  => $form->createView(),
