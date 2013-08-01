@@ -4,34 +4,37 @@
 
 {% include 'form.html.twig' %}
 
-{% set row = 0 %}
+{% set row           = 0 %}
+{% set actor_image   = tmdb_img_path ~ actor.profile_path %}
 
 <div class="row-fluid">
-    <div class="span3 rounded-corners person-info">
+    <aside class="span3 rounded-corners person-info">
         {% if actor.profile_path == '' %}
-            <img src="http://placehold.it/185x278&amp;text=No+Image+Available" class="img-rounded">
-        {% else %}
-            <img src="http://d3gtl9l2a4fn1j.cloudfront.net/t/p/w185/{{ actor.profile_path }}" class="img-rounded">
+            {% set actor_image = dummy_image %}
         {% endif %}
-        <h2>{{ actor.name }}</h2>
-    </div>
 
-    <div class="span9 person-credits rounded-corners">
+        <img data-original="{{ actor_image }}" src="{{ loading_image }}" class="img-rounded">
+        <h2>{{ actor.name }}</h2>
+    </aside>
+
+    <section class="span9 person-credits rounded-corners">
         {% for movie in credits.cast %}
             {% if row == 0 %}
                 <div class="row-fluid">
             {% endif %}
 
-            <div class="span4 credits-info">
+            <article class="span4 credits-info">
                 {% if movie.poster_path == '' %}
-                    <img src="http://placehold.it/185x278&amp;text=No+Image+Available" class="img-rounded">
+                    {% set movie_image = dummy_image %}
                 {% else %}
-                    <img src="http://d3gtl9l2a4fn1j.cloudfront.net/t/p/w185/{{ movie.poster_path }}" class="img-rounded">
+                    {% set movie_image = tmdb_img_path ~ movie.poster_path %}
                 {% endif %}
+
+                <img data-original="{{ movie_image }}" src="{{ loading_image }}" class="img-rounded">
                 <h3>
                     <a href="/movie/{{ movie.id }}">{{ movie.title }}</a>
                 </h3>
-            </div>
+            </article>
 
             {% set row = row + 1 %}
 
@@ -41,7 +44,7 @@
                 {% set row = 0 %}
             {% endif %}
         {% endfor %}
-    </div>
+    </section>
 </div>
 
 {% endblock %}

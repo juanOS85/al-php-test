@@ -4,18 +4,20 @@
 
 {% include 'form.html.twig' %}
 
-<div class="row-fluid">
-    <div class="span12 rounded-corners movie-info">
-        <div class="span3">
-            {% if movie.poster_path == '' %}
-                <img src="http://placehold.it/232x348&amp;text=No+Image+Available" class="img-rounded">
-            {% else %}
-                <img src="http://d3gtl9l2a4fn1j.cloudfront.net/t/p/w342/{{ movie.poster_path }}" class="img-rounded">
-            {% endif %}
-        </div>
+{% set movie_image   = tmdb_img_path_big ~ movie.poster_path %}
 
-        <div class="span9">
-            <div class="page-header">
+<div class="row-fluid">
+    <section class="span12 rounded-corners movie-info">
+        <aside class="span3">
+            {% if movie.poster_path == '' %}
+                {% set movie_image = dummy_image %}
+            {% endif %}
+
+            <img data-original="{{ movie_image }}" src="{{ loading_image }}" class="img-rounded">
+        </aside>
+
+        <article class="span9">
+            <header class="page-header">
                 <h1>
                     {{ movie.original_title }}
                     <small>{{ movie.release_date }}</small>
@@ -30,12 +32,12 @@
                 {% for genre in movie.genres %}
                     <span class="label">{{ attribute(genre, 'name') }}</span>
                 {% endfor %}
-            </div>
+            </header>
 
             <p>{{ movie.overview }}</p>
 
-        </div>
-    </div>
+        </article>
+    </section>
 </div>
 
 {% endblock %}

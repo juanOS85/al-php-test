@@ -14,10 +14,17 @@
         <link rel="stylesheet" media="screen" href="/assets/css/style.css">
     </head>
     <body>
+        <!-- Global variables for Twig templates -->
+        {% set loading_image     = 'http://placehold.it/185x278/ffffff/ffffff' %}
+        {% set dummy_image       = 'http://placehold.it/185x278&text=No+Image' %}
+        {% set tmdb_img_path     = 'http://d3gtl9l2a4fn1j.cloudfront.net/t/p/w185/' %}
+        {% set tmdb_img_path_big = 'http://d3gtl9l2a4fn1j.cloudfront.net/t/p/w342/' %}
+
         <div class="container-fluid">{% block content %}{% endblock %}</div>
 
         <!-- jQuery -->
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
         <!-- Thrid-party libraries -->
         <script src="/assets/js/vendor/jquery.lazyload.min.js"></script>
         <script type="text/javascript">
