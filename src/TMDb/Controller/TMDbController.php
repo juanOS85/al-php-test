@@ -10,12 +10,16 @@ use TMDb\API\TMDbAPI;
  */
 class TMDbController {
     /**
-     *
+     * @var TMDbAPI TMDBAPI instance
      */
     protected $tmdbApi;
 
     /**
+     * Index action
      *
+     * @param mixed $request
+     * @param Application $app Silex app
+     * @return mixed Render Twig template
      */
     public function indexAction(Request $request, Application $app) {
         $form = $app['form.factory']->createNamedBuilder(null, 'form', null)
@@ -40,7 +44,11 @@ class TMDbController {
     }
 
     /**
+     * Search action
      *
+     * @param mixed $request
+     * @param Application $app Silex app
+     * @return mixed Render Twig template
      */
     public function searchAction(Request $request, Application $app) {
         $this->tmdbApi = TMDbAPI::getInstance();
@@ -113,7 +121,12 @@ class TMDbController {
     }
 
     /**
+     * Actor action
      *
+     * @param integer $id Actor/actress TMDb ID
+     * @param mixed $request
+     * @param Application $app Silex app
+     * @return mixed Render Twig template
      */
     public function actorAction($id, Request $request, Application $app) {
         $form = $app['form.factory']->createNamedBuilder(null, 'form', $app['session']->get('data'))
@@ -146,7 +159,12 @@ class TMDbController {
     }
 
     /**
+     * Movie action
      *
+     * @param integer $id Actor/actress TMDb ID
+     * @param mixed $request
+     * @param Application $app Silex app
+     * @return mixed Render Twig template
      */
     public function movieAction($id, Request $request, Application $app) {
         $form = $app['form.factory']->createNamedBuilder(null, 'form', $app['session']->get('data'))
@@ -170,7 +188,6 @@ class TMDbController {
         $this->tmdbApi = TMDbAPI::getInstance();
         $movieInfo = json_decode($this->tmdbApi->getMovieBasicInfo($id));
         $movieInfo->release_date = date('F j, Y', strtotime($movieInfo->release_date));
-
 
         return $app['twig']->render('movie.html.twig', array(
             'form'  => $form->createView(),
